@@ -36,9 +36,7 @@ namespace Robbery
             _goals = FindObjectsOfType<RobberyGoal>();
             foreach (RobberyGoal goal in _goals)
                 goal.Completed += UpdateList;
-            
-            Debug.Log("!");
-            
+
             CreateLines();
         }
 
@@ -61,7 +59,7 @@ namespace Robbery
         private void UpdateList()
         {
             Changed?.Invoke();
-            
+
             // Redraw
             for (int i = 0; i < _goals.Length; i++)
             {

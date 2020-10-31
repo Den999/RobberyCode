@@ -12,6 +12,17 @@ public class Room : MonoBehaviour
 
     public bool IsVisible
     {
-        set => body.gameObject.SetActive(value);
+        set
+        {
+            // var allMeshRenderersInRoom = GetComponentsInChildren<MeshRenderer>(); 
+            // foreach (MeshRenderer meshRenderer in allMeshRenderersInRoom)
+            //     meshRenderer.enabled = value;
+            //
+            // var allCollidersInRoom = GetComponentsInChildren<Collider>(); 
+            // foreach (Collider coll in allCollidersInRoom)
+            //     coll.enabled = value;
+            
+            body?.gameObject.SetActive(value);
+        }
     }
 }

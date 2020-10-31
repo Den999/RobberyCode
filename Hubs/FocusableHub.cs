@@ -1,14 +1,15 @@
 using System;
 using D2D.Utils;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace D2D
 {
     public class FocusableHub : SwitchableHub<FocusableInteractable>
     {
         [SerializeField] private KeyCode _unfocusKey;
-        [SerializeField] private GameObject _defaultPP;
-        [SerializeField] private GameObject _focusedPP;
+        [SerializeField] private Volume _defaultPP;
+        [SerializeField] private Volume _focusedPP;
         
         [SerializeField] CanvasGroup _mainCanvasGroup;
         [SerializeField] CanvasGroup _focusesCanvasGroup;
@@ -49,8 +50,8 @@ namespace D2D
 
         private void FocusGameView(bool state)
         {
-            _defaultPP.gameObject.SetActive(!state);
-            _focusedPP.gameObject.SetActive(state);
+            var profileHub = gameObject.FindOrCreate<PostProcessingProfileHub>();
+            profileHub.Current = state ? _focusedPP : _defaultPP;
 
             FunctionTimer.Create(() => SwitchCanvases(state), .5f);
             _playerRenderer.gameObject.SetActive(!state);

@@ -9,32 +9,28 @@ using UnityEngine;
 
 public class Escape : Interactable
 {
-    [SerializeField] private TextMeshPro _label;
-    
     public event Action PlayerEscaped;
 
     private RobberyList _robberyList;
 
-    private void Awake()
+    private void OnEnable()
     {
         _robberyList = FindObjectOfType<RobberyList>();
-    }
-    private void Update()
-    {
-        UpdateInteractivity();
+        _robberyList.Changed += UpdateInteractivity;
     }
 
+    private void OnDisable()
+    {
+        _robberyList.Changed -= UpdateInteractivity;
+    }
+    
     private void UpdateInteractivity()
     {
-        // isInteractable = true;
         isInteractable = _robberyList.IsCompleted;
-        _label.gameObject.SetActive(_robberyList.IsCompleted);
     }
 
     protected override void OnAction()
     {
-        var sceneLoader = gameObject.FindOrCreate<SceneLoader>();
-        sceneLoader.LoadMainMenu();
-        // PlayerEscaped?.Invoke();
+        PlayerEscaped?.Invoke();
     }
 }

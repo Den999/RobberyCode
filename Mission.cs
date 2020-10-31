@@ -6,15 +6,18 @@ using D2D.Core;
 using D2D.Utils;
 using Robbery;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Mission : GameStateMachineHasher
 {
     [SerializeField] private int timeLimitInSeconds;
+    [SerializeField] private int _levelNumber;
 
     [Space(5)]
     
     [SerializeField] private Material daySkybox;
     [SerializeField] private Light dayLight;
+    [SerializeField] private Volume _finishGameProfile;
 
     private MissionTimer _timer;
     private Escape _escape;
@@ -79,11 +82,20 @@ public class Mission : GameStateMachineHasher
     private void LoseMission()
     {
         StateMachine.PushState(new LoseState());
+        SetFinishGameProfile();
     }
 
     private void WinMission()
     {
         StateMachine.PushState(new WinState());
-        Debug.Log("...");
+        SetFinishGameProfile();
+        
+        LevelDatabase.SetLevelCompleted(_levelNumber);
+    }
+
+    private void SetFinishGameProfile()
+    {
+        var profileHub = gameObject.FindOrCreate<PostProcessingProfileHub>();
+        profileHub.Current = _finishGameProfile;
     }
 }

@@ -8,11 +8,11 @@ namespace D2D
     public class FocusableInteractable : Interactable
     {
         [SerializeField] private CinemachineVirtualCamera _focusCamera;
-        [SerializeField] private GameObject[] _focusContent;
+        [SerializeField] private GameObject _focusContent;
         
         protected bool IsFocused { get; private set; }
 
-        private void Awake()
+        private void Start()
         {
             SwitchContent(false);
         }
@@ -47,10 +47,7 @@ namespace D2D
         
         private void SwitchContent(bool state)
         {
-            foreach (GameObject content in _focusContent)
-            {
-                content.gameObject.SetActive(state);
-            }
+            _focusContent.SetActive(state);
         }
     }
 }

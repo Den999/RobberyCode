@@ -27,7 +27,6 @@ public class Button3d : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("Click!");
         _pressAnim.DORestart();
         Pressed?.Invoke(_number);
     }

@@ -25,7 +25,7 @@ public abstract class Interactable : MonoBehaviour
       get
       {
          if (_player == null)
-            Init();
+            return true;
          
          var vectorToPlayer = _player.position - transform.position;
          return vectorToPlayer.magnitude <= _interactDistance;
@@ -42,16 +42,18 @@ public abstract class Interactable : MonoBehaviour
 
    private void Awake()
    {
-      Init();
-   }
-
-   private void Init()
-   {
       _outline = GetComponent<Outline>();
       _hint = FindObjectOfType<Hint>();
-      _player = FindObjectOfType<Player>().transform;
+      _player = FindObjectOfType<Player>()?.transform;
+      
+      OnAwake();
    }
 
+   protected virtual void OnAwake()
+   {
+      
+   }
+   
    void OnMouseOver()
    {
       if (!isInteractable || !IsReachable)
@@ -70,8 +72,6 @@ public abstract class Interactable : MonoBehaviour
 
    private void OnMouseDown()
    {
-      Debug.Log("Down");
-      
       if (isInteractable && IsReachable)
          Action();
    }

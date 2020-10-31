@@ -10,6 +10,7 @@ public class LockBox : FocusableInteractable
 {
     [SerializeField] private Button3d _openButton;
     [SerializeField] private DOTweenAnimation _openAnim;
+    [SerializeField] private GameObject _openContent;
 
     public event Action Opened;
 
@@ -32,6 +33,7 @@ public class LockBox : FocusableInteractable
         {
             _openAnim.DOPlay();
             Opened?.Invoke();
+            _openContent.gameObject.SetActive(true);
         }
     }
 }

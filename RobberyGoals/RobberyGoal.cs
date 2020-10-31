@@ -16,7 +16,6 @@ namespace D2D
         protected void OnComplete()
         {
             IsCompleted = true;
-            Debug.Log("ye");
             Completed?.Invoke();
         }
     }
